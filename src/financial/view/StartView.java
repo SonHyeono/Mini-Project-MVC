@@ -35,10 +35,9 @@ public class StartView {
 		controller.etfProjectInsert(nightingale);
 		controller.etfProjectInsert(Wifi);
 	
-		
 		System.out.println("\n*** 02. 모든 Project 검색 ***");
 		controller.getetfProjectsList();		
-		
+	
 		
 		System.out.println("\n*** 03. '케인즈' Project 검색 ***");
 		controller.getetfProject("케인즈");
