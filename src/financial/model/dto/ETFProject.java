@@ -1,4 +1,14 @@
 package financial.model.dto;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 
 public class ETFProject {
 	/** ETF 이름 */
@@ -18,88 +28,29 @@ public class ETFProject {
 
 	/** 진행되는 project의 상세 내용 */
 	private String EtfProjectDetail;
-
-	public ETFProject() {
-		super();
-	}
-
-	public ETFProject(String etfName, ETF projectEtf, ETFCustomer projectEtfCustomer, ETFManager projectEtfManager,
-			String startDate, String etfProjectDetail) {
-		super();
-		this.etfName = etfName;
-		this.projectEtf = projectEtf;
-		this.projectEtfCustomer = projectEtfCustomer;
-		this.projectEtfManager = projectEtfManager;
-		this.startDate = startDate;
-		this.EtfProjectDetail = etfProjectDetail;
-	}
-
-	public String getEtfName() {
-		return etfName;
-	}
-
-	public void setEtfName(String etfName) {
-		this.etfName = etfName;
-	}
-
-	public ETF getProjectEtf() {
-		return projectEtf;
-	}
-
-	public void setProjectEtf(ETF projectEtf) {
-		this.projectEtf = projectEtf;
-	}
-
-	public ETFCustomer getProjectEtfCustomer() {
-		return projectEtfCustomer;
-	}
-
-	public void setProjectEtfCustomer(ETFCustomer projectEtfCustomer) {
-		this.projectEtfCustomer = projectEtfCustomer;
-	}
-
-	public ETFManager getProjectEtfManager() {
-		return projectEtfManager;
-	}
-
-	public void setProjectEtfManager(ETFManager projectEtfManager) {
-		this.projectEtfManager = projectEtfManager;
-	}
-
-	public String getStartDate() {
-		return startDate;
-	}
-
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
-	}
-
-	public String getEtfProjectDetail() {
-		return EtfProjectDetail;
-	}
-
-	public void setEtfProjectDetail(String etfProjectDetail) {
-		EtfProjectDetail = etfProjectDetail;
-	}
-
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
+		builder.append(System.getProperty("line.separator"));
 		builder.append("ETFProject [etfName=");
 		builder.append(etfName);
-		builder.append(", projectEtf=");
+		builder.append(System.getProperty("line.separator"));
+		builder.append("ETF 객체 : ");
 		builder.append(projectEtf);
-		builder.append(", projectEtfCustomer=");
+		builder.append(System.getProperty("line.separator"));
+		builder.append("구매자 : ");
 		builder.append(projectEtfCustomer);
-		builder.append(", projectEtfManager=");
+		builder.append(System.getProperty("line.separator"));
+		builder.append("판매자 : ");
 		builder.append(projectEtfManager);
-		builder.append(", startDate=");
+		builder.append(System.getProperty("line.separator"));
+		builder.append("ETF 매수한 날짜 : ");
 		builder.append(startDate);
-		builder.append(", EtfProjectDetail=");
+		builder.append(", 프로젝트 상세 사항 : ");
 		builder.append(EtfProjectDetail);
 		builder.append("]");
+		builder.append(System.getProperty("line.separator"));
 		return builder.toString();
 	}
-	
-	
 }

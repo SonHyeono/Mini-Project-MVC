@@ -1,4 +1,16 @@
 package financial.model.dto;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString   
 
 public class ETFManager {
 	/** 판매자 이름 */
@@ -12,65 +24,4 @@ public class ETFManager {
 	
 	/** 판매자 휴대폰 번호 */
 	private String PhoneNumber;
-	
-	public ETFManager() {
-		super();
-	}
-
-	public ETFManager(String name, int age, String rank, String phoneNumber) {
-		super();
-		Name = name;
-		Age = age;
-		this.rank = rank;
-		PhoneNumber = phoneNumber;
-	}
-
-	public String getName() {
-		return Name;
-	}
-
-	public void setName(String name) {
-		Name = name;
-	}
-
-	public int getAge() {
-		return Age;
-	}
-
-	public void setAge(int age) {
-		Age = age;
-	}
-
-	public String getRank() {
-		return rank;
-	}
-
-	public void setRank(String rank) {
-		this.rank = rank;
-	}
-
-	public String getPhoneNumber() {
-		return PhoneNumber;
-	}
-
-	public void setPhoneNumber(String phoneNumber) {
-		PhoneNumber = phoneNumber;
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("ETFManager [Name=");
-		builder.append(Name);
-		builder.append(", Age=");
-		builder.append(Age);
-		builder.append(", rank=");
-		builder.append(rank);
-		builder.append(", PhoneNumber=");
-		builder.append(PhoneNumber);
-		builder.append("]");
-		return builder.toString();
-	}
-	
-	
 }
