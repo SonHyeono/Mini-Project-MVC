@@ -31,7 +31,7 @@ public class ETFProject {
 		this.projectEtfCustomer = projectEtfCustomer;
 		this.projectEtfManager = projectEtfManager;
 		this.startDate = startDate;
-		EtfProjectDetail = etfProjectDetail;
+		this.EtfProjectDetail = etfProjectDetail;
 	}
 
 	public String getEtfName() {
