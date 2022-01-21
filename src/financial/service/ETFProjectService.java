@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Optional;
 
 import financial.exception.DuplicationProjectException;
 import financial.exception.ProjectNotFoundException;
@@ -27,66 +28,71 @@ public class ETFProjectService {
 
 	/** project 입력 기능 호출 */
 	public void etfProjectInsert(ETFProject etf) throws DuplicationProjectException {
-		for (ETFProject e : etfProjectList) {
-			if (e.getEtfName().equals(etf.getEtfName())) {
-				throw new DuplicationProjectException("이미 존재하는 프로젝트입니다.");
-			}
-		}
-		etfProjectList.add(etf);
-	}
 
+		boolean anyMatch = etfProjectList.stream().anyMatch(s -> s.getEtfName().equals(etf.getEtfName()));
+
+		if (anyMatch) {
+			throw new DuplicationProjectException("이미 존재하는 프로젝트입니다.");
+		} else {
+			etfProjectList.add(etf);
+		}
+	}
 
 //  전체 project 조회	
 	public ArrayList<ETFProject> getetfProjectsList() throws ProjectNotFoundException {
-		if (etfProjectList.size() == 0) {
-			throw new ProjectNotFoundException("Project가 비었습니다.");
-		} else {
+
+		int x = etfProjectList.size();        //int x = (int) etfProjectList.stream().count();
+		
+		if (x != 0) {
 			return etfProjectList;
+		} else {
+			throw new ProjectNotFoundException("Project가 비었습니다.");
 		}
 
 	}
 
 //	하나의 project를 조회하여 반환
 	public ETFProject getetfProject(String e) throws ProjectNotFoundException {
-		for (ETFProject etf : etfProjectList) {
-			if (etf.getEtfName().equals(e)) {
-				return etf;
-			}
+		
+		Optional<ETFProject> etf = etfProjectList.stream().filter(s -> s.getEtfName().equals(e)).findAny();
+		
+		if(!etf.isPresent()) {
+			throw new ProjectNotFoundException("해당 프로젝트가 존재하지 않습니다.");
 		}
-		throw new ProjectNotFoundException("해당 프로젝트가 존재하지 않습니다.");
+		return etf.get();
 	}
 
 // 수정 메소드 
 	public void etfCustomerUpdate(String s, ETFCustomer etfcustomer) throws ProjectNotFoundException {
-		for (ETFProject etf : etfProjectList) {
-			if (etf.getEtfName().equals(s)) {
-				etf.setProjectEtfCustomer(etfcustomer);
-				return;
-			}
+
+		Optional<ETFProject> etf = etfProjectList.stream().filter(e -> e.getEtfName().equals(s)).findAny();
+		
+		if(!etf.isPresent()) {
+			throw new ProjectNotFoundException("미 존재하는 프로젝트 수정 시도입니다.");
 		}
-		throw new ProjectNotFoundException("미 존재하는 프로젝트 수정 시도입니다.");
+		etf.get().setProjectEtfCustomer(etfcustomer);
 	}
 
 //수정 메소드
 	public void etfManagerUpdate(String s, ETFManager manger) throws ProjectNotFoundException {
-		for (ETFProject etf : etfProjectList) {
-			if (etf.getEtfName().equals(s)) {
-				etf.setProjectEtfManager(manger);
-				return;
-			}
+		
+		Optional<ETFProject> etf = etfProjectList.stream().filter(e -> e.getEtfName().equals(s)).findAny();
+
+		if(!etf.isPresent()) {
+			throw new ProjectNotFoundException("미 존재하는 프로젝트 수정 시도입니다.");
 		}
-		throw new ProjectNotFoundException("미 존재하는 프로젝트 수정 시도입니다.");
+		etf.get().setProjectEtfManager(manger);
+		
 	}
 
 // 삭제 메소드 
 	public void etfProjectDelete(String s) throws ProjectNotFoundException {
-		for (ETFProject etf : etfProjectList) {
-			if (etf.getEtfName().equals(s)) {
-				etfProjectList.remove(etf);
-				return;
-			}
+		Optional<ETFProject> etf = etfProjectList.stream().filter(e -> e.getEtfName().equals(s)).findAny();
+
+		if(!etf.isPresent()) {
+			throw new ProjectNotFoundException("미 존재하는 프로젝트 삭제 시도입니다.");
 		}
-		throw new ProjectNotFoundException("미 존재하는 프로젝트 삭제 시도입니다.");
+		etfProjectList.remove(etf.get());
 	}
 
 // 프로젝트를 정렬하는 메소드 
@@ -102,9 +108,9 @@ public class ETFProjectService {
 		if (etfProjectList.size() == 0)
 			throw new ProjectNotFoundException("입력된 Project가 없습니다.");
 		HashSet<ETFCustomer> cus = new HashSet<ETFCustomer>();
-		for (ETFProject etf : etfProjectList) {
-			cus.add(etf.getProjectEtfCustomer());
-		}
+		
+		etfProjectList.stream().forEach(n -> cus.add(n.getProjectEtfCustomer()));
+
 		ArrayList<ETFCustomer> recus = new ArrayList<>(cus);
 		Collections.sort(recus, new ComparatorCustomer());
 		return recus;
@@ -122,15 +128,14 @@ public class ETFProjectService {
 		HashSet<ETFCustomer> cus = new HashSet<ETFCustomer>();
 		ArrayList<ETFCustomer> arr = new ArrayList<ETFCustomer>();
 
-		for (ETFProject etf : etfProjectList) {
-			cus.add(etf.getProjectEtfCustomer());
-			arr.add(etf.getProjectEtfCustomer());
-		}
+		etfProjectList.stream().forEach(n -> { 
+			cus.add(n.getProjectEtfCustomer());
+			arr.add(n.getProjectEtfCustomer());
+		});
+		
 		ArrayList<ETFCustomer> recus = new ArrayList<ETFCustomer>(cus);
 
-		for (ETFCustomer e : recus) {
-			maps.put(e, Collections.frequency(arr, e));
-		}
+		recus.stream().forEach(e ->maps.put(e, Collections.frequency(arr, e)));
 		return maps;
 	}
 
@@ -147,15 +152,14 @@ public class ETFProjectService {
 		HashSet<ETFManager> cus = new HashSet<ETFManager>();
 		ArrayList<ETFManager> arr = new ArrayList<ETFManager>();
 
-		for (ETFProject etf : etfProjectList) {
-			cus.add(etf.getProjectEtfManager());
-			arr.add(etf.getProjectEtfManager());
-		}
+		etfProjectList.stream().forEach(n -> { 
+			cus.add(n.getProjectEtfManager());
+			arr.add(n.getProjectEtfManager());
+		});
 		ArrayList<ETFManager> recus = new ArrayList<ETFManager>(cus);
 
-		for (ETFManager e : recus) {
-			maps.put(e, Collections.frequency(arr, e));
-		}
+		recus.stream().forEach(e ->maps.put(e, Collections.frequency(arr, e)));
+		
 		return maps;
 	}
 

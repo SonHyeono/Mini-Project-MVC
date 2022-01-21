@@ -24,6 +24,9 @@ public class ETFProjectController {
 
 	// service에 있는 project 입력 기능 호출
 	public void etfProjectInsert(ETFProject etf) {
+		
+		
+		
 		if (etf != null) {
 			try {
 				service.etfProjectInsert(etf);
