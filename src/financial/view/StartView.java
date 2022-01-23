@@ -1,5 +1,7 @@
 package financial.view;
 
+import org.apache.log4j.Logger;
+
 import financial.controller.ETFProjectController;
 import financial.model.dto.ETF;
 import financial.model.dto.ETFCustomer;
@@ -7,6 +9,32 @@ import financial.model.dto.ETFManager;
 import financial.model.dto.ETFProject;
 
 public class StartView {
+	
+	static Logger logger = Logger.getLogger("log4jtest.Log4jTest");
+
+	public static void login(String id) {
+		if(id.equals("login")) {
+			logger.trace("trace");
+			logger.debug("debug");
+			logger.info("info");
+			logger.warn("warn" + id);
+			logger.error("error");
+		}else {
+			System.out.println("id 무효--------------");
+		}
+	}
+	public static void logout(String id) {
+		if(id.equals("logout")) {
+			logger.trace("trace");
+			logger.debug("debug");
+			logger.info("info");
+			logger.warn("warn" + id);
+			logger.error("error");
+		}else {
+			System.out.println("id 무효--------------");
+		}
+	}
+	
 
 	public static void main(String[] args) {
 			
@@ -50,15 +78,24 @@ public class StartView {
 		//ETF 프로젝트 생성하기
 		System.out.println("*** 01. Project 생성 ***");
 		controller.etfProjectInsert(project1);
+		login("login");
 		controller.etfProjectInsert(project2);
+		login("login");
 		controller.etfProjectInsert(project3);
+		login("login");
 		controller.etfProjectInsert(project4);
+		login("login");
 		controller.etfProjectInsert(project5);
+		login("login");
 		controller.etfProjectInsert(project6);
+		login("login");
 		controller.etfProjectInsert(project7);
+		login("login");
 		controller.etfProjectInsert(project8);
+		login("login");
 		controller.etfProjectInsert(project9);
-	
+		login("login");
+		
 		// 모든 Project 검색 
 		System.out.println("\n*** 02. 모든 Project 검색 ***");
 		controller.getetfProjectsList();		
@@ -85,11 +122,13 @@ public class StartView {
 		System.out.println("\n*** 06. '프로젝트1' Project 삭제 후 삭제한 Project 검색 ***");
 		controller.etfProjectDelete("프로젝트1");
 		controller.getetfProject("프로젝트1");
+		logout("logout");
 	
 
 		// 새로운 메소드를 위해 지운 프로젝트 1을 추가
 		ETFProject alive = new ETFProject("프로젝트1",etf1, etfCustomer1,etfManger1,"2022년 1월 1일","금리 인상 시 수혜");
 		controller.etfProjectInsert(alive);
+		login("login");
 		
 		// 모든 프로젝트 검색
 		System.out.println("\n*** 07. 모든 Project 검색 ***");
